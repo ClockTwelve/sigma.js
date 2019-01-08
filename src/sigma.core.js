@@ -224,10 +224,11 @@
     }
 
     // Deal with resize:
-    window.addEventListener('resize', function() {
+    this._resizeHandler = function() {
       if (_self.settings)
         _self.refresh();
-    });
+    }
+    window.addEventListener('resize', this._resizeHandler);
   };
 
 
@@ -672,6 +673,9 @@
    */
   sigma.prototype.kill = function() {
     var k;
+
+    // Remove window resize event listener
+    window.removeEventListener('resize', this._resizeHandler);
 
     // Dispatching event
     this.dispatchEvent('kill');
